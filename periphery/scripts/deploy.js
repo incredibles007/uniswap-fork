@@ -6,22 +6,32 @@
 const hre = require("hardhat");
 
 async function main() {
-  const WETHFactory = await hre.ethers.getContractFactory("WETH");
-  const wethFactory = await WETHFactory.deploy();
-  await wethFactory.deployed();
 
-  console.log("WETHFactory deployed to:", wethFactory.address);
-  const FACTORY_ADDRESS = "0x5FbDB2315678afecb367f032d93F642f64180aa3"
-  const WETH_ADDRESS = wethFactory.address
 
+  let FACTORY_ADDRESS, WETH_ADDRESS
+  if (hre.network.name == "hardhat")
+  {     
+    FACTORY_ADDRESS = "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+
+    const WETHFactory = await hre.ethers.getContractFactory("WETH");
+    const wethFactory = await WETHFactory.deploy();
+    await wethFactory.deployed();
+    WETH_ADDRESS = wethFactory.address
+  
+    console.log("WETHFactory deployed to:", wethFactory.address);
+  }
+  else if (hre.network.name == "ropstenTest")
+  {
+    FACTORY_ADDRESS = "0xe83dF27eF92d95C883cB0f22d8Be5f4E35500Ad3"
+    WETH_ADDRESS = "0xb603cea165119701b58d56d10d2060fbfb3efad8"
+  }
+  
+  console.log("Deploying UniswapV2Router02 on ", hre.network.name)
   const UniswapV2Router02Factory = await hre.ethers.getContractFactory("UniswapV2Router02")
   const uniswapV2Router02Factory = await UniswapV2Router02Factory.deploy(FACTORY_ADDRESS, WETH_ADDRESS)
   await uniswapV2Router02Factory.deployed();
 
-  console.log("UniswapV2Router02Factory is deploed to:", uniswapV2Router02Factory.address)
-
-  // WETHFactory deployed to: 0x5FbDB2315678afecb367f032d93F642f64180aa3
-  // UniswapV2Router02Factory is deploed to: 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512  
+  console.log("UniswapV2Router02Factory is deployed to:", uniswapV2Router02Factory.address)
 }
 
 // We recommend this pattern to be able to use async/await everywhere

@@ -15,15 +15,7 @@ async function main() {
 
   let token1Address, token2Address;
 
-  const Token1 = await hre.ethers.getContractFactory("Token1");
-  const Token2 = await hre.ethers.getContractFactory("Token2");
-  const token1Factory = await Token1.deploy();
-  const token2Factory = await Token2.deploy();
-  token1Address = token1Factory.address
-  token2Address = token2Factory.address
 
-  console.log("Token 1 is deployed to address: ", token1Address)
-  console.log("Token 2 is deployed to address: ", token2Address)
 }
 
 // We recommend this pattern to be able to use async/await everywhere
