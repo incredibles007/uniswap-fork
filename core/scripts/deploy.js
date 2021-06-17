@@ -52,8 +52,10 @@ async function main() {
 
   console.log(`Creating factory pair: [${token1Address}, ${token2Address}]`)
 
-  const pairAddress = await uniswapV2Factory.createPair(token1Address, token2Address)
-  console.log("UniswapV2Factory.createPair...", pairAddress.hash)
+  let pairAddress = await uniswapV2Factory.createPair(token1Address, token2Address)
+  console.log(`UniswapV2Pair address: `, pairAddress)
+  pairAddress = await uniswapV2Factory.getPair(token1Address, token2Address);
+  console.log(`UniswapV2Factory.getPair(token1: ${token1Address}, token2: ${token2Address})`, pairAddress)
 }
 
 // We recommend this pattern to be able to use async/await everywhere
