@@ -30,9 +30,11 @@ async function main() {
 
   if (hre.network.name === "hardhat") {
   }
-  else if (hre.network.name == "ropstenTest") {
+  else if (hre.network.name == "kovanTest") {
     UNISWAP_ROUTER_ADDRESS = "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D"
-    UNISWAP_PAIR_ADDRESS = ""
+    // https://www.dextools.io/app/uniswap/pair-explorer/0x0d4a11d5eeaac28ec3f61d100daf4d40471f1852
+    // WETH /USDT Pair
+    UNISWAP_PAIR_ADDRESS = "0x0d4a11d5eeaac28ec3f61d100daf4d40471f1852"
   }
   else {
     throw new Error(`Invalid network ${hre.network.name}`)

@@ -24,37 +24,42 @@ async function main() {
   console.log("UniswapV2Factory deployed to:", uniswapV2Factory.address);
   // UniswapV2Factory deployed to: 0x5FbDB2315678afecb367f032d93F642f64180aa3
 
-  let token1Address, token2Address;
-  if (hre.network.name === "hardhat")
+  let token1Address, token2Address, token1Name, token2Name;
+
+  if (hre.network.name == "hardhat")
   {
     console.log("Deploying Token1 and Token2")
-    const Token1 = await hre.ethers.getContractFactory("Token1");
-    const Token2 = await hre.ethers.getContractFactory("Token2");
+    token1Name = "Token1"
+    token2Name = "Token2"
+    const Token1 = await hre.ethers.getContractFactory(token1Name);
+    const Token2 = await hre.ethers.getContractFactory(token2Name);
     const token1Factory = await Token1.deploy();
     const token2Factory = await Token2.deploy();
 
-    console.log("Token 1 is deployed to address: ", token1Factory.address)
-    console.log("Token 2 is deployed to address: ", token2Factory.address)
+    console.log(token1Name, " is deployed to address: ", token1Factory.address)
+    console.log(token2Name, "is deployed to address: ", token2Factory.address)
   
     token1Address = token1Factory.address
     token2Address = token2Factory.address  
   }
-  else if (hre.network.name == "ropstenTest")
+  else if (hre.network.name == "kovanTest")
   {
-    // Ropsten ERC20Token1
-    token1Address = "0x8d1ddfe0860b9e6632579400aebf7735684c8bce"
-    // Meter-ERC20
-    token2Address = "0x8f9ec10f71afc10b123234e470d625713fc59514"
+    // CollateralERC20
+    token1Name =  "CollateralERC20"
+    token1Address = "0x5303b6cd94e37d48bcfb2b90c1aef8ca54f65d15"
+    // MockERC20 
+    token2Name = "MockERC20" 
+    token2Address = "0x8384fede9acc41276cd28f77b27f10b375206fa7"
   }
   else {
     throw new Error(`Invalid network ${hre.network.name}`)
   }
 
-  console.log(`Creating factory pair: [${token1Address}, ${token2Address}]`)
+  console.log(`Creating factory pair: [${token1Name}, ${token2Name}]`)
 
   let pairAddress = await uniswapV2Factory.createPair(token1Address, token2Address)
   pairAddress = await uniswapV2Factory.getPair(token1Address, token2Address);
-  console.log(`UniswapV2Factory.getPair(token1: ${token1Address}, token2: ${token2Address})`, pairAddress)
+  console.log(`UniswapV2Factory.getPair(token1: ${token1Name}, token2: ${token2Name})`, pairAddress)
 }
 
 // We recommend this pattern to be able to use async/await everywhere
