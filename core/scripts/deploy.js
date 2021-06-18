@@ -53,7 +53,6 @@ async function main() {
   console.log(`Creating factory pair: [${token1Address}, ${token2Address}]`)
 
   let pairAddress = await uniswapV2Factory.createPair(token1Address, token2Address)
-  console.log(`UniswapV2Pair address: `, pairAddress)
   pairAddress = await uniswapV2Factory.getPair(token1Address, token2Address);
   console.log(`UniswapV2Factory.getPair(token1: ${token1Address}, token2: ${token2Address})`, pairAddress)
 }
