@@ -28,9 +28,9 @@ async function main() {
 
   if (hre.network.name == "hardhat")
   {
-    console.log("Deploying Token1 and Token2")
-    token1Name = "Token1"
-    token2Name = "Token2"
+    token1Name = "WETH"
+    token2Name = "DAI"
+    console.log(`Deploying ${token1Name} and ${token2Name} on ${hre.network.name}`)
     const Token1 = await hre.ethers.getContractFactory(token1Name);
     const Token2 = await hre.ethers.getContractFactory(token2Name);
     const token1Factory = await Token1.deploy();
@@ -42,14 +42,12 @@ async function main() {
     token1Address = token1Factory.address
     token2Address = token2Factory.address  
   }
-  else if (hre.network.name == "kovanTest")
+  else if (hre.network.name == "bscTest")
   {
-    // CollateralERC20
-    token1Name =  "CollateralERC20"
-    token1Address = "0x5303b6cd94e37d48bcfb2b90c1aef8ca54f65d15"
-    // MockERC20 
-    token2Name = "MockERC20" 
-    token2Address = "0x8384fede9acc41276cd28f77b27f10b375206fa7"
+    token1Name =  "ETH"
+    token1Address = "" // TODO: BSC Testnet Faucet 'ten ETH yukle ve adresini al
+    token2Name = "DAI" 
+    token2Address = "0xec5dcb5dbf4b114c9d0f65bccab49ec54f6a0867"
   }
   else {
     throw new Error(`Invalid network ${hre.network.name}`)

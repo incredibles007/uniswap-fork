@@ -17,7 +17,8 @@ Migrator contract
 
 ## Notes
 
-First, Deploy core contracts
+### First, Deploy core contracts
+
 ```
 yarn run hardhat run scripts\deploy.js --network kovanTest 
 ```
